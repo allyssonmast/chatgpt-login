@@ -1,9 +1,17 @@
+
+
 const express = require('express');
-const router = express.Router();
-const userController = require('../controllers/userController');
 
-router.post('/login', userController.loginUser);
-router.post('/users', userController.createUser);
-router.get('/users/:id', userController.findUserById);
+// As rotas não precisam saber das classes injetadas
+function userRoutes(app, userController) {
+    const router = express.Router();
 
-module.exports = router;
+    router.post('/login', userController.loginUser);
+    router.post('/users', userController.createUser);
+    router.get('/users/:id', userController.findUserById);
+
+
+    app.use(router);
+}
+
+module.exports = { userRoutes };

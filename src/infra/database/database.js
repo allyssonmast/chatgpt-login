@@ -1,15 +1,15 @@
-const { MongoClient } = require('mongodb');
-
+const mongoose = require('mongoose');
+require('dotenv').config();
 class Database {
-    constructor({ url, dbName }) {
-        this.url = url;
-        this.dbName = dbName;
+    constructor(url) {
+        this.url = url
         this.client = null;
     }
 
     async connect() {
-        this.client = await MongoClient.connect(this.url, { useUnifiedTopology: true });
-        this.db = this.client.db(this.dbName);
+        const url = "mongodb+srv://allyssonmast:a451412@allyssoncluster.uemd966.mongodb.net/mycontacts-backend?retryWrites=true&w=majority"
+        this.client = await mongoose.connect(url);
+        console.log('Database connect', this.client.host, this.client.name);
     }
 
     async disconnect() {
